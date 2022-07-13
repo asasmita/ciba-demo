@@ -1,0 +1,55 @@
+<div class="bx--row landing-page__r2">
+	<div class="bx--col-md-4 bx--col-lg-7">
+		<h1 class="landing-page__gettingstarted">My Bank Mobile Application</h1>
+		{{#if hasNotif}}
+		<div data-notification class="ci--notification-error bx--inline-notification bx--inline-notification--error"
+			role="alert">
+			<div class="bx--inline-notification__details">
+				<svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"
+					class="bx--inline-notification__icon" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+					<path d="M10,1c-5,0-9,4-9,9s4,9,9,9s9-4,9-9S15,1,10,1z M13.5,14.5l-8-8l1-1l8,8L13.5,14.5z"></path>
+					<path d="M13.5,14.5l-8-8l1-1l8,8L13.5,14.5z" data-icon-path="inner-path" opacity="0"></path>
+				</svg>
+				<div class="bx--inline-notification__text-wrapper">
+					<p class="bx--inline-notification__title">{{notifMsg}}</p>
+				</div>
+			</div>
+		</div>
+		{{/if}}
+		{{#if noMessage}}
+		<div data-notification class="ci--notification-error bx--inline-notification bx--inline-notification--error"
+			role="alert">
+			<div class="bx--inline-notification__details">
+				<svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"
+					class="bx--inline-notification__icon" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+					<path d="M10,1c-5,0-9,4-9,9s4,9,9,9s9-4,9-9S15,1,10,1z M13.5,14.5l-8-8l1-1l8,8L13.5,14.5z"></path>
+					<path d="M13.5,14.5l-8-8l1-1l8,8L13.5,14.5z" data-icon-path="inner-path" opacity="0"></path>
+				</svg>
+				<div class="bx--inline-notification__text-wrapper">
+					<p class="bx--inline-notification__title">There is no message</p>
+				</div>
+			</div>
+		</div>
+		{{/if}}
+		{{#if haveMessage}}
+		<h1 class="landing-page__gettingstarted">{{data.bindingMessage}}</h1>
+		<br />
+		<form name="consentForm" method="POST" action="/authenticator/consent">
+			<input type="hidden" name="hint" value="{{data.hint}}"/>
+			<input type="hidden" name="decision" value=""/>
+			<a onclick="approveConsent();" class="bx--link bx--tile bx--tile--clickable landing-page_primary">Approve<svg
+				focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" aria-label="Login"
+				xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32" role="img">
+				<path d="M26,30H14a2,2,0,0,1-2-2V25h2v3H26V4H14V7H12V4a2,2,0,0,1,2-2H26a2,2,0,0,1,2,2V28A2,2,0,0,1,26,30Z"/>
+				<path d="M14.59 20.59L18.17 17 4 17 4 15 18.17 15 14.59 11.41 16 10 22 16 16 22 14.59 20.59z"/>
+			</svg></a>
+			<a onclick="denyConsent();" class="bx--link bx--tile bx--tile--clickable landing-page_primary">Deny<svg
+				focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" aria-label="Login"
+				xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32" role="img">
+				<path d="M26,30H14a2,2,0,0,1-2-2V25h2v3H26V4H14V7H12V4a2,2,0,0,1,2-2H26a2,2,0,0,1,2,2V28A2,2,0,0,1,26,30Z"/>
+				<path d="M14.59 20.59L18.17 17 4 17 4 15 18.17 15 14.59 11.41 16 10 22 16 16 22 14.59 20.59z"/>
+			</svg></a>
+		</form>
+		{{/if}}
+	</div>
+</div>

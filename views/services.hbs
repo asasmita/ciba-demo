@@ -1,0 +1,143 @@
+<h1 class="landing-page__gettingstarted">Photo Print</h1>
+<div class="bx--row landing-page__breadcrumb">
+	<div class="bx--col-lg-12">
+		<nav aria-label="Page navigation">
+			<img src='/img/favicon.ico' onload="waitAndReload()" width="1" height="1"/>
+			<script>
+				function waitAndReload() {
+					{{#if tokenExist}}
+					{{else if showReject}}
+					{{else}}
+					setTimeout(function () {
+	    				window.location.reload();
+    				}, 5000);
+					{{/if}}
+				}
+			</script>
+			<ol class="bx--breadcrumb">
+				<li class="bx--breadcrumb-item"><a href="/kiosk" class="bx--link">Back to home</a></li>
+				<li class="bx--breadcrumb-item"><a href="/services/refresh?id={{authReq.auth_req_id}}" class="bx--link" style="color:black">Refresh</a></li>
+			</ol>
+		</nav>
+	</div>
+</div>
+<div class="bx--row profile-content">
+	<div class="ci--table-container bx--col">
+		<div data-tabs class="bx--tabs">
+			<div class="bx--tabs-trigger" tabindex="0">
+				<a href="javascript:void(0)" class="bx--tabs-trigger-text" tabindex="-1"></a>
+				<svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="16"
+					height="16" viewBox="0 0 16 16" aria-hidden="true">
+					<path d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"></path>
+				</svg>
+			</div>
+			<ul class="bx--tabs__nav bx--tabs__nav--hidden" role="tablist">
+				<li class="bx--tabs__nav-item bx--tabs__nav-item--selected " data-target=".profile-content-tab"
+					role="tab" aria-selected="true">
+					<a tabindex="0" id="tab-link-1-default" class="darktabs bx--tabs__nav-link"
+						href="javascript:void(0)" role="tab" aria-controls="tab-panel-1-default">Transaction</a>
+				</li>
+				{{#if tokenExist}}
+				<li class="bx--tabs__nav-item " data-target=".profile-content-tab2" role="tab">
+					<a tabindex="0" id="tab-link-2-default" class="darktabs bx--tabs__nav-link"
+						href="javascript:void(0)" role="tab" aria-controls="tab-panel-2-default">ID token</a>
+				</li>
+				<li class="bx--tabs__nav-item " data-target=".profile-content-tab3" role="tab">
+					<a tabindex="0" id="tab-link-3-default" class="darktabs bx--tabs__nav-link"
+						href="javascript:void(0)" role="tab" aria-controls="tab-panel-3-default">Introspection</a>
+				</li>
+				{{/if}}
+			</ul>
+		</div>
+		<div class="bx--tab-content">
+			<div id="tab-panel-1-default" class="profile-content-tab" role="tabpanel"
+				aria-labelledby="tab-link-1-default" aria-hidden="false">
+				<div>
+					<div class="bx--data-table-container">
+						<h1 class="landing-page__gettingstarted">Transaction Details:</h1>
+						<table class="bx--data-table bx--data-table--no-border">
+							<thead>
+								<tr class="tab-dataTable-row">
+									<th scope="col"><span class="bx--table-header-label">Name</span></th>
+									<th scope="col"><span class="bx--table-header-label">Value</span></th>
+								</tr>
+							</thead>
+							<tbody aria-live="polite">
+								<tr>
+									<td>Transaction ID:</td>
+									<td>{{authReq.auth_req_id}}</td>
+								</tr>
+								<tr>
+									<td>Summary:</td>
+									<td>{{authReq.binding_message}}</td>
+								</tr>
+								<tr>
+									<td>Username Identification:</td>
+									<td>{{authReq.login_hint}}</td>
+								</tr>
+								{{#if qrExist}}
+								<tr>
+									<td>&nbsp;</td>
+									<td><img src="{{authReq.qr}}"/><br/>{{authReq.user_authorize_uri}}</td>
+								</tr>
+								{{/if}}
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div data-notification class="ci--notification-error bx--inline-notification bx--inline-notification--error"
+					role="alert">
+					<div class="bx--inline-notification__details">
+						<svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"
+							class="bx--inline-notification__icon" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+							<path d="M10,1c-5,0-9,4-9,9s4,9,9,9s9-4,9-9S15,1,10,1z M13.5,14.5l-8-8l1-1l8,8L13.5,14.5z"></path>
+							<path d="M13.5,14.5l-8-8l1-1l8,8L13.5,14.5z" data-icon-path="inner-path" opacity="0"></path>
+						</svg>
+						<div class="bx--inline-notification__text-wrapper">
+							{{#if tokenExist}}
+							<p class="bx--inline-notification__title">Payment transaction has been approved. Start printing your photo ...</p>
+							{{else if showReject}}
+							<p class="bx--inline-notification__title">User has rejected this transaction.</p>
+							{{else if qrExist}}
+							<p class="bx--inline-notification__title">Waiting for payment. Please follow the link above to continue the transaction.</p>
+							{{else}}
+							<p class="bx--inline-notification__title">Waiting for payment. Please check your phone for any push notification from MyBank.</p>
+							{{/if}}
+						</div>
+					</div>
+				</div>			
+			</div>
+			{{#if tokenExist}}
+			<div id="tab-panel-2-default" class="profile-content-tab2" role="tabpanel"
+				aria-labelledby="tab-link-2-default" aria-hidden="true" hidden>
+				<div>
+					<div style="padding-top:.125rem">
+						<div class="bx--data-table-header">
+							<h4 class="bx--data-table-header__title">Full ID token</h4>
+							<p class="bx--data-table-header__description">This is the full ID token response from your
+								OIDC session</p>
+						</div>
+						<pre>
+							<code class="railscasts json">{{fullJson}}</code>
+						</pre>
+					</div>
+				</div>
+			</div>
+			<div id="tab-panel-3-default" class="profile-content-tab3" role="tabpanel"
+				aria-labelledby="tab-link-3-default" aria-hidden="true" hidden>
+				<div>
+					<div style="padding-top:.125rem">
+						<div class="bx--data-table-header">
+							<h4 class="bx--data-table-header__title">Introspection payload</h4>
+							<p class="bx--data-table-header__description">This is the introspection response</p>
+						</div>
+						<pre>
+							<code class="railscasts json">{{introspection}}</code>
+						</pre>
+					</div>
+				</div>
+			</div>
+			{{/if}}
+		</div>
+	</div>
+</div>

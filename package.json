@@ -1,0 +1,35 @@
+{
+  "name": "fapi-demo",
+  "version": "1.0.0",
+  "description": "Demo app that acts as a OIDC RP",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node server/server.js",
+    "start": "node server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asasmita/fapi-demo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/asasmita/fapi-demo/issues"
+  },
+  "homepage": "https://github.com/asasmita/fapi-demo#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^9.0.2",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.2",
+    "express-session": "^1.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "jws": "^3.2.2",
+    "openid-client": "^5.0.2",
+    "qrcode": "^1.5.0",
+    "uuidv4": "^6.2.8",
+    "verify-privacy-sdk-js": "https://github.com/vivshankar/verify-privacy-sdk-js.git#main"
+  }
+}

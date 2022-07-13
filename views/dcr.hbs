@@ -1,0 +1,107 @@
+<h1 class="landing-page__gettingstarted">Dynamic Client Registration</h1>
+<div class="bx--row profile-content">
+	<div class="ci--table-container bx--col">
+		<div class="bx--tab-content">
+			<div id="tab-panel-1-default" class="profile-content-tab" role="tabpanel"
+				aria-labelledby="tab-link-1-default" aria-hidden="false">
+				<form name="registerForm" method="POST" action="/dcr/create">
+				<div>
+					<div class="bx--data-table-container">
+						<h1 class="landing-page__gettingstarted">Create Dynamic Client Form:</h1>
+						<h4>This demo page is using the following <a href="/jwks/relyingparty">Relying Party</a> jwks_uri
+						and <a href="/jwks/obdirectory">Open Banking Directory</a> jwks_uri</h4>
+						<table class="bx--data-table bx--data-table--no-border">
+							<thead>
+								<tr class="tab-dataTable-row">
+									<th scope="col"><span class="bx--table-header-label">Name</span></th>
+									<th scope="col"><span class="bx--table-header-label">Value</span></th>
+								</tr>
+							</thead>
+							<tbody aria-live="polite">
+								<tr>
+									<td>Payload:</td>
+									<td><textarea cols="100" rows="10" name="metadata">
+{
+	"client_name": "TestFAPI",
+	"redirect_uris": ["https://www.ibm.com"],
+	"grant_types": ["authorization_code", "refresh_token", "client_credentials", "urn:openid:params:grant-type:ciba"],
+	"response_types": ["code id_token"],
+	"scope": "openid profile",
+	"token_endpoint_auth_method": "client_secret_post",
+	"backchannel_token_delivery_mode": "ping",
+	"backchannel_client_notification_endpoint": "http://172.16.123.1:3000/services/ping"
+}
+									</textarea></td>
+								</tr>
+								<tr>
+									<td>Send Bearer Token:</td>
+									<td><select name="sendBearer">
+										<option value="true">true</option>
+										<option value="false">false</option>
+									</select></td>
+								</tr>
+								<tr>
+									<td>Send Software Statement:</td>
+									<td><select name="sendSoftwareStatement">
+										<option value="true">true</option>
+										<option value="false">false</option>
+									</select></td>
+								</tr>
+								<tr>
+									<td>Send As:</td>
+									<td><select name="contentType">
+										<option value="json">application/json</option>
+										<option value="jwt">application/jwt</option>
+									</select></td>
+								</tr>
+								<tr>
+									<td>&nbsp;</td>
+									<td>
+										<a onclick="registerSubmit();" class="bx--link bx--tile bx--tile--clickable landing-page_primary">Submit<svg
+											focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" aria-label="Login"
+											xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32" role="img">
+											<path d="M26,30H14a2,2,0,0,1-2-2V25h2v3H26V4H14V7H12V4a2,2,0,0,1,2-2H26a2,2,0,0,1,2,2V28A2,2,0,0,1,26,30Z"/>
+											<path d="M14.59 20.59L18.17 17 4 17 4 15 18.17 15 14.59 11.41 16 10 22 16 16 22 14.59 20.59z"/>
+										</svg></a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				</form>
+			</div>
+			{{#if success}}
+			<div id="tab-panel-2-default" class="profile-content-tab2" role="tabpanel"
+				aria-labelledby="tab-link-2-default" aria-hidden="false">
+				<div>
+					<div style="padding-top:.125rem">
+						<div class="bx--data-table-header">
+							<h4 class="bx--data-table-header__title">Dynamic Client Registration Response</h4>
+							<p class="bx--data-table-header__description">This is the registration response</p>
+						</div>
+						<pre>
+							<code class="railscasts json">{{client}}</code>
+						</pre>
+					</div>
+				</div>
+			</div>
+			{{/if}}
+			{{#if failed}}
+			<div data-notification class="ci--notification-error bx--inline-notification bx--inline-notification--error"
+				role="alert">
+				<div class="bx--inline-notification__details">
+					<svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"
+						class="bx--inline-notification__icon" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+						<path d="M10,1c-5,0-9,4-9,9s4,9,9,9s9-4,9-9S15,1,10,1z M13.5,14.5l-8-8l1-1l8,8L13.5,14.5z"></path>
+						<path d="M13.5,14.5l-8-8l1-1l8,8L13.5,14.5z" data-icon-path="inner-path" opacity="0"></path>
+					</svg>
+					<div class="bx--inline-notification__text-wrapper">
+						<p class="bx--inline-notification__title">{{error.error_description}}</p>
+					</div>
+				</div>
+			</div>			
+			{{/if}}
+		</div>
+	</div>
+</div>

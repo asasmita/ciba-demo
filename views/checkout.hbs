@@ -1,0 +1,124 @@
+<h1 class="landing-page__gettingstarted">Photo Print</h1>
+<div class="bx--row landing-page__breadcrumb">
+	<div class="bx--col-lg-12">
+		<nav aria-label="Page navigation">
+			<ol class="bx--breadcrumb">
+				<li class="bx--breadcrumb-item"><a href="/kiosk" class="bx--link">Back to home</a></li>
+			</ol>
+		</nav>
+	</div>
+</div>
+<div class="bx--row profile-content">
+	<div class="ci--table-container bx--col">
+		<div class="bx--tab-content">
+			<div id="tab-panel-1-default" class="profile-content-tab" role="tabpanel"
+				aria-labelledby="tab-link-1-default" aria-hidden="false">
+				<div>
+					<div class="bx--data-table-container">
+						<table class="bx--data-table bx--data-table--no-border">
+							<thead>
+								<tr class="tab-dataTable-row">
+									<th scope="col"><span class="bx--table-header-label">Name</span></th>
+									<th scope="col"><span class="bx--table-header-label">Value</span></th>
+								</tr>
+							</thead>
+							<tbody aria-live="polite">
+								<tr>
+									<td>Product Code:</td>
+									<td>{{item.code}}</td>
+								</tr>
+								<tr>
+									<td>Produce Name:</td>
+									<td>{{item.name}}</td>
+								</tr>
+								<tr>
+									<td>Price per piece:</td>
+									<td>$ {{item.price}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div id="tab-panel-2-default" class="profile-content-tab" role="tabpanel"
+				aria-labelledby="tab-link-2-default" aria-hidden="false">
+				<div>
+					<div class="bx--data-table-container">
+						<div class="bx--data-table-header">
+							<h4 class="bx--data-table-header__title">Payment</h4>
+							<p class="bx--data-table-header__description">Specify the following to purchase the item:</p>
+						</div>
+						{{#if noBankInfo}}
+						<form name="bankForm" action="/kiosk/checkout" method="POST">
+						<input type="hidden" name="item" value="{{item.code}}"/>
+						<table class="bx--data-table bx--data-table--no-border">
+							<thead>
+								<tr class="tab-dataTable-row">
+									<th scope="col"><span class="bx--table-header-label">Name</span></th>
+									<th scope="col"><span class="bx--table-header-label">Value</span></th>
+								</tr>
+							</thead>
+							<tbody aria-live="polite">
+								<tr>
+									<td>Quantity:</td>
+									<td><input type="text" name="qty" value="{{item.qty}}"></td>
+								</tr>
+								<tr>
+									<td>Select Bank:</td>
+									<td>
+										<select onchange="bankChanged();" name="select_bank">
+											<option value="">Select Bank</option>
+											<option value="MyBank">MyBank</option>
+										</select>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						</form>
+						{{/if}}
+						{{#if hasBankInfo}}
+						<form name="paymentForm" action="/services/print" method="POST">
+						<input type="hidden" name="code" value="{{item.code}}"/>
+						<table class="bx--data-table bx--data-table--no-border">
+							<thead>
+								<tr class="tab-dataTable-row">
+									<th scope="col"><span class="bx--table-header-label">Name</span></th>
+									<th scope="col"><span class="bx--table-header-label">Value</span></th>
+								</tr>
+							</thead>
+							<tbody aria-live="polite">
+								<tr>
+									<td>Quantity:</td>
+									<td><input id="qty_id" type="text" name="qty" value="{{item.qty}}"></td>
+								</tr>
+								<tr>
+									<td>Selected Bank:</td>
+									<td>{{item.bankId}}</td>
+								</tr>
+								<tr>
+									<td>MyBank requests your phone number:</td>
+									<td>
+										<input id="hint_id" type="text" name="hint" value="97355164"/>
+									</td>
+								</tr>
+								<tr>
+									<td>&nbsp;</td>
+									<td>
+										<a onclick="paymentSubmit();" class="bx--link bx--tile bx--tile--clickable landing-page_primary">Submit<svg
+											focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" aria-label="Submit"
+											xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32" role="img">
+											<path d="M26,30H14a2,2,0,0,1-2-2V25h2v3H26V4H14V7H12V4a2,2,0,0,1,2-2H26a2,2,0,0,1,2,2V28A2,2,0,0,1,26,30Z"/>
+											<path d="M14.59 20.59L18.17 17 4 17 4 15 18.17 15 14.59 11.41 16 10 22 16 16 22 14.59 20.59z"/>
+										</svg></a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						</form>
+						{{/if}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
