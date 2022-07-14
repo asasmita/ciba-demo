@@ -1,6 +1,6 @@
-# FAPI-demo
+# CIBA-demo
 
-This application is created to demonstrate FAPI flows. The application is built with Node.js and uses openid-client. 
+This application is created to demonstrate CIBA flow. The application is built with Node.js and uses openid-client. 
 All UI assets can be found under `views` and `public`. All `views` are written using vanilla HTML and JS and templated using Handlebars.
 
 In this app, you can do the following -
