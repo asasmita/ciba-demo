@@ -64,6 +64,27 @@ tls_client_auth_subject_dn: CN=clientID01,OU=security,O=IBM,L=singapore,ST=singa
 tls_client_certificate_bound_access_tokens: false
 ```
 
+If you see the `config` folder, there are 2 templates: `wrpca.pem.template` and `isamfedca.pem.template`.
+The assumption here is your WRP and MMFA provider is using self-signed certificate. That's why we need to 
+supply the public key as a trusted certificate. You can use `openssl s_client -connect <host:port>` to download
+the certificate.
+
+If you are downloading pre-setup environment for IBM Security Verify Access OIDC Provider, there are few things
+you need to change in `provider.yml`:
+
+```
+  backchannel_settings:
+    ...
+    notifyuser_mappingrule_id: notifyuser_demo
+    checkstatus_mappingrule_id: checkstatus_demo
+```
+
+Also there is IP 172.16.123.1 that supposedly pointing to this demo app, replace it accordingly.
+
+Then, inside those `notifyuser_demo.js` and `checkstatus_demo.js` (under `data/javascript/mappingrule` folder) 
+there are similar IP address. Also in the client configuration `cibademo.yml` and `cibapoll.yml` 
+(under `data/clients` folder), there are similar IP address (for `jwks_uri`).
+
 ## Setup the application
 Copy `dotenv` file to `.env` and populate the values as below
 
