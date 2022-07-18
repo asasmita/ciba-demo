@@ -274,7 +274,7 @@ class ServicesController {
     // Choosing between poll or ping mode
     getClientInfo = async (login_hint) => {
         var clientInfo = {};
-        if (login_hint === "jessica") {
+        if (login_hint === "97355164") {
             clientInfo = {
                 "client_id": config.pollClientId,
                 "client_secret": config.pollClientSecret,
