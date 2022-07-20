@@ -28,7 +28,7 @@ client_secret_expires_at: 0
 client_name: Photo Print Client
 enabled: true
 redirect_uris:
-  - https://www.ibm.com
+  - https://www.google.com
 grant_types:
   - authorization_code
   - client_credentials
@@ -36,13 +36,16 @@ grant_types:
   - urn:openid:params:grant-type:ciba
 response_types:
   - code id_token
-token_endpoint_auth_method: tls_client_auth
-tls_client_auth_subject_dn: CN=clientID01,OU=security,O=IBM,L=singapore,ST=singapore,C=SG
-tls_client_certificate_bound_access_tokens: true
-jwks_uri: http://172.16.123.1:3000/jwks/relyingparty
+scopes:
+  - openid
+  - profile
+token_endpoint_auth_method: private_key_jwt
+token_endpoint_auth_signing_alg: PS256
+token_endpoint_auth_single_use_jti: false
+id_token_signed_response_alg: PS512
+jwks_uri: http://172.16.123.1:3000/jwks/relyingparty # this endpoint is hosted by this demo app
 request_object_signing_alg: ES512
-backchannel_token_delivery_mode: ping
-backchannel_client_notification_endpoint: http://172.16.123.1:3000/services/ping
+backchannel_token_delivery_mode: poll
 backchannel_user_code_parameter: false
 ```
 
@@ -70,20 +73,29 @@ supply the public key as a trusted certificate. You can use `openssl s_client -c
 the certificate.
 
 If you are downloading pre-setup environment for IBM Security Verify Access OIDC Provider, there are few things
-you need to change in `provider.yml`:
+you need to change in `provider.yml`.
 
+This is for CIBA demo:
 ```
   backchannel_settings:
     ...
-    notifyuser_mappingrule_id: notifyuser_demo
-    checkstatus_mappingrule_id: checkstatus_demo
+    notifyuser_mappingrule_id: notifyuser_demo # this mapping rule is pre-packaged
+    checkstatus_mappingrule_id: checkstatus_demo # this mapping rule is pre-packaged
 ```
 
-Also there is IP 172.16.123.1 that supposedly pointing to this demo app, replace it accordingly.
+This is for Dynamic Client demo to validate the software statement:
+```
+dynamic_registration:
+  ...
+  software_statement_validation:
+    jwks_uri: http://172.16.123.1:3000/jwks/obdirectory # this endpoint is hosted by this demo app
+```
 
 Then, inside those `notifyuser_demo.js` and `checkstatus_demo.js` (under `data/javascript/mappingrule` folder) 
-there are similar IP address. Also in the client configuration `cibademo.yml` and `cibapoll.yml` 
+there are similar IP address. Also (optional) in the client configuration `cibaping.yml` 
 (under `data/clients` folder), there are similar IP address (for `jwks_uri`).
+The `cibademo.yml` does not contain `jwks_uri` because the public key are added into the keystore already
+(under `keystore/rt_profile/signer`).
 
 ## Setup the application
 Copy `dotenv` file to `.env` and populate the values as below
