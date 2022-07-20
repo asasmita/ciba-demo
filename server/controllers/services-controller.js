@@ -52,7 +52,6 @@ class ServicesController {
         }
 
         let authReq = {
-            "transactionId": uuid(),
             "binding_message": bindingMessage,
             "scope": "openid",
             "login_hint": hint,
