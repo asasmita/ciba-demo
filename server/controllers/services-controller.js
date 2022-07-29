@@ -239,6 +239,10 @@ class ServicesController {
         }
         authReq["iss"] = clientInfo['client_id'];
         authReq["aud"] = this._metadata["issuer"];
+        authReq["iat"] = Math.trunc(new Date().getTime()/1000);
+        authReq["nbf"] = Math.trunc(new Date().getTime()/1000);
+        authReq["exp"] = Math.trunc((new Date().getTime()/1000) + 1800); // 30 minutes
+        authReq["jti"] = uuid();
         const signature = jws.sign({
             header: header,
             payload: authReq,
